@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#10141d">
+    <title>Dashboard | CodeTogether</title>
+    <link rel="stylesheet" href="/static/css/app.css">
+    <script src="/static/js/dashboard.js" defer></script>
+  </head>
+  <body class="app-page">
+    <header class="topbar">
+      <a class="brand" href="/dashboard">
+        <span class="brand-mark" aria-hidden="true">&lt;/&gt;</span>
+        <span>CodeTogether</span>
+      </a>
+      <div class="topbar-actions">
+        <span id="welcome-user" class="welcome-user"></span>
+        <button id="logout-button" class="button button-secondary" type="button">Log out</button>
+      </div>
+    </header>
+
+    <main class="dashboard">
+      <section class="intro">
+        <p class="eyebrow">YOUR PRIVATE WORKSPACE</p>
+        <h1>Build together.</h1>
+        <p class="muted">A small space for three friends to learn, solve, and share.</p>
+      </section>
+
+      <section class="panel members-panel" aria-labelledby="members-title">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">THE TEAM</p>
+            <h2 id="members-title">Your people</h2>
+          </div>
+          <span class="count-pill">3 accounts</span>
+        </div>
+        <div id="member-list" class="member-grid" aria-live="polite"></div>
+      </section>
+
+      <section class="panel next-panel" aria-labelledby="next-title">
+        <span class="next-icon" aria-hidden="true">⌘</span>
+        <div>
+          <p class="eyebrow">YOUR SHARED SPACE</p>
+          <h2 id="next-title">Ready to work together?</h2>
+          <p class="muted">Open the coding room to browse a coding platform, chat with the group, check who is online, and share a coding website browser tab.</p>
+          <a class="button button-primary room-link" href="/room">Enter coding room</a>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
