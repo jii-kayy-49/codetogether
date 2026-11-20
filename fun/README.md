@@ -6,9 +6,8 @@ CodeTogether is a private collaboration room for exactly three configured accoun
 
 - Three predefined accounts, scrypt password verification, and signed eight-hour sessions.
 - Protected dashboard and coding room, with logout and session validation.
-- HackerRank, GeeksforGeeks, and LeetCode links with an iframe attempt and new-tab fallback.
 - SQLite-persisted chat history, limited to the most recent 100 messages. Online presence remains in memory and resets on restart.
-- A WebRTC mesh lets each online participant connect to the other two. Tab capture starts only after a click on **Share Coding Tab**.
+- A WebRTC mesh lets each online participant connect to the other two. Browser-tab capture starts only after a click on **Share Browser Tab**.
 - Chat permits multiple tabs for an account; screen signaling supports one active room session per account, and a newer session replaces the previous signaling socket.
 - Screen capture is accepted only when the browser reports `displaySurface: "browser"`. The browser controls its own source picker; the application cannot force a particular site tab or inspect its contents. Unsupported or unverifiable source types are stopped rather than falling back to a window or monitor.
 - Screen media is peer-to-peer. The application server handles signaling only; streams are not recorded or stored by it.
@@ -128,8 +127,8 @@ Use three separate browser profiles/devices and distinct configured accounts:
 
 1. Sign in as User 1 in Chrome, User 2 in Edge, and User 3 in an Incognito profile. Confirm all three appear online.
 2. Send chat messages from each client; confirm delivery, usernames, timestamps, and safe rendering of text such as `<script>`.
-3. Open a separate HackerRank tab for User 1, LeetCode tab for User 2, and GeeksforGeeks tab for User 3.
-4. Click **Share Coding Tab** in each room and choose the matching website tab in the browser picker. Confirm each participant sees both other users' streams.
+3. Open any browser tabs you want to share in each browser.
+4. Click **Share Browser Tab** in each room and choose a tab in the browser picker. Confirm each participant sees both other users' streams.
 5. Stop one share with the room button and another using the browser's native stop control. Confirm the remaining streams continue independently.
 6. Attempt to select a window/monitor if the browser offers one; confirm the app stops it and reports that it will not fall back.
 7. Disconnect one client/network briefly, restore it, and confirm presence, signaling, and peer connections recover. Refresh a participant and confirm its prior share ends cleanly.
@@ -146,7 +145,6 @@ Automated tests cover authentication, protected routes, chat limits/history, sig
 - **WebSocket rejected:** use the same host and scheme for the page and WebSocket, allow WebSocket upgrades at the proxy, and preserve the `Origin` header. The app rejects cross-origin WebSocket requests.
 - **Tab share unavailable:** use HTTPS (or localhost), a browser with `getDisplayMedia`, and choose a browser tab. If `displaySurface` cannot be verified or reports a window/monitor, the app intentionally stops capture.
 - **Peer is connected but video does not arrive:** check outbound UDP/ICE/firewall policies and add a supported TURN relay. A successful signaling connection does not prove media connectivity.
-- **External coding page is blank:** the site may disallow embedding. Use **Open in new tab**; the app does not bypass the site's frame policy.
 - **Sharing uses too much bandwidth/CPU:** stop unneeded shares, use a lower-resolution browser source, or test a less demanding network/device. The project does not include a media server or central transcoder.
 - **Chat history is unavailable:** check that the server can create/write `codetogether.sqlite3` in the `fun` directory and that no other process is locking the file. The app logs database errors rather than silently dropping a message.
 - **Presence differs between users or disappears:** keep one application process/worker. Presence is temporary and resets when that process restarts; chat history is retained in SQLite.
