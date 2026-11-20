@@ -31,87 +31,38 @@
     </header>
 
     <main class="room-workspace">
-      <section class="panel platform-panel" aria-labelledby="platform-title">
-        <div class="platform-heading">
+      <section class="panel participants-panel" aria-labelledby="participants-title">
+        <div class="sidebar-heading">
           <div>
-            <p class="eyebrow">CODING PLATFORM</p>
-            <h1 id="platform-title">Pick a place to solve</h1>
+            <p class="eyebrow">LIVE ROOM</p>
+            <h1 id="participants-title">Shared screens</h1>
           </div>
-          <span class="section-caption">External sites stay in their own origin</span>
+          <span id="participant-count" class="count-pill">3 members</span>
         </div>
-
-        <nav class="platform-tabs" aria-label="Coding platforms">
-          <button class="platform-tab" type="button" data-platform="hackerrank" aria-pressed="false">HackerRank</button>
-          <button class="platform-tab" type="button" data-platform="geeksforgeeks" aria-pressed="false">GeeksforGeeks</button>
-          <button class="platform-tab" type="button" data-platform="leetcode" aria-pressed="false">LeetCode</button>
-        </nav>
-
-        <div class="embed-toolbar">
-          <div class="selected-platform">
-            <span class="live-dot" aria-hidden="true"></span>
-            <span id="selected-platform-name">Choose a platform</span>
+        <div class="screen-share-controls">
+          <div class="screen-share-actions">
+            <button id="share-screen" class="button button-primary" type="button" disabled>
+              Share Browser Tab
+            </button>
+            <button id="stop-screen-share" class="button button-secondary" type="button" disabled>
+              Stop Sharing
+            </button>
           </div>
-          <a id="open-platform" class="button button-secondary open-platform" href="#" target="_blank" rel="noopener noreferrer" hidden>
-            Open in new tab <span aria-hidden="true">↗</span>
-          </a>
+          <p id="screen-share-status" class="screen-share-status" role="status">
+            Connecting to screen-sharing service…
+          </p>
+          <p id="screen-share-error" class="screen-share-error" role="alert" hidden></p>
+          <p class="screen-share-hint">
+            Choose a browser tab in the picker to share it with the room. Only browser tabs are supported; the app cannot inspect the selected tab.
+          </p>
         </div>
-
-        <div class="embed-frame">
-          <div id="embed-empty" class="embed-empty">
-            <span class="embed-icon" aria-hidden="true">&lt;/&gt;</span>
-            <h2>Select a coding platform</h2>
-            <p>Choose HackerRank, GeeksforGeeks, or LeetCode above to try opening it here.</p>
-          </div>
-          <div id="embed-loading" class="embed-loading" role="status" hidden>
-            <span class="loading-spinner" aria-hidden="true"></span>
-            <span>Loading external website…</span>
-          </div>
-          <iframe
-            id="platform-frame"
-            title="External coding platform"
-            referrerpolicy="strict-origin-when-cross-origin"
-            loading="lazy"
-            hidden
-          ></iframe>
+        <div id="participant-cards" class="participant-cards" aria-live="polite">
+          <p class="panel-loading">Loading configured members…</p>
         </div>
-        <p id="embed-notice" class="embed-notice" role="status">
-          Some coding sites block embedded views. If the page stays blank or shows an error, use “Open in new tab”.
-        </p>
+        <p class="phase-note">Online status updates live. Screen capture requires HTTPS or localhost.</p>
       </section>
 
       <aside class="room-sidebar">
-        <section class="panel participants-panel" aria-labelledby="participants-title">
-          <div class="sidebar-heading">
-            <div>
-              <p class="eyebrow">THE ROOM</p>
-              <h2 id="participants-title">Participants</h2>
-            </div>
-            <span id="participant-count" class="count-pill">3 members</span>
-          </div>
-          <div class="screen-share-controls">
-            <div class="screen-share-actions">
-              <button id="share-coding-tab" class="button button-primary" type="button" disabled>
-                Share Coding Tab
-              </button>
-              <button id="stop-coding-tab" class="button button-secondary" type="button" disabled>
-                Stop Sharing
-              </button>
-            </div>
-            <p id="screen-share-status" class="screen-share-status" role="status">
-              Connecting to screen-sharing service…
-            </p>
-            <p id="screen-share-error" class="screen-share-error" role="alert" hidden></p>
-            <p class="screen-share-hint">
-              Open HackerRank, LeetCode, or GeeksforGeeks in a separate tab first, then select that browser tab in the picker.
-              Only a source reported as a browser tab will be shared; the browser controls the available choices and this app cannot verify the selected site's contents.
-            </p>
-          </div>
-          <div id="participant-cards" class="participant-cards" aria-live="polite">
-            <p class="panel-loading">Loading configured members…</p>
-          </div>
-          <p class="phase-note">Online status updates live. Screen capture requires HTTPS or localhost.</p>
-        </section>
-
         <section class="panel chat-panel" aria-labelledby="chat-title">
           <div class="chat-heading">
             <div>
