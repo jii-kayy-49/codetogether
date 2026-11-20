@@ -1,6 +1,6 @@
 (() => {
-const shareButton = document.querySelector("#share-coding-tab");
-const stopShareButton = document.querySelector("#stop-coding-tab");
+const shareButton = document.querySelector("#share-screen");
+const stopShareButton = document.querySelector("#stop-screen-share");
 const shareStatus = document.querySelector("#screen-share-status");
 const shareError = document.querySelector("#screen-share-error");
 const roomLogoutButton = document.querySelector("#room-logout");
@@ -61,10 +61,10 @@ function updateSharingDisplay(username, isSharing) {
       : "Not sharing";
   }
   if (placeholder && !isSharing) {
-    placeholder.textContent = "Not sharing a coding tab";
+    placeholder.textContent = "Not sharing a browser tab";
     placeholder.hidden = false;
   } else if (placeholder && isSharing) {
-    placeholder.textContent = "Connecting to shared tab…";
+    placeholder.textContent = "Connecting to shared browser tab…";
   }
 }
 
@@ -102,8 +102,8 @@ function clearRemoteVideo(username) {
   if (placeholder) {
     placeholder.hidden = false;
     placeholder.textContent = sharingUsers.has(username)
-      ? "Connecting to shared tab…"
-      : "Not sharing a coding tab";
+      ? "Connecting to shared browser tab…"
+      : "Not sharing a browser tab";
   }
 }
 
@@ -557,7 +557,7 @@ async function startSharing() {
   }
 
   shareButton.disabled = true;
-  setShareStatus("Choose the coding website's browser tab in the browser picker…");
+  setShareStatus("Choose a browser tab in the browser picker…");
   let stream;
   try {
     stream = await navigator.mediaDevices.getDisplayMedia({
@@ -737,7 +737,7 @@ document.querySelector("#participant-cards").addEventListener("click", (event) =
     return;
   }
   video.requestFullscreen().catch(() => {
-    setShareError("Could not open the selected coding tab in fullscreen.");
+    setShareError("Could not open the shared browser tab in fullscreen.");
   });
 });
 
