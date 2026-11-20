@@ -1,25 +1,3 @@
-const platforms = Object.freeze({
-  hackerrank: {
-    label: "HackerRank",
-    url: "https://www.hackerrank.com/",
-  },
-  geeksforgeeks: {
-    label: "GeeksforGeeks",
-    url: "https://www.geeksforgeeks.org/",
-  },
-  leetcode: {
-    label: "LeetCode",
-    url: "https://leetcode.com/",
-  },
-});
-
-const platformButtons = document.querySelectorAll("[data-platform]");
-const platformFrame = document.querySelector("#platform-frame");
-const openPlatform = document.querySelector("#open-platform");
-const selectedPlatformName = document.querySelector("#selected-platform-name");
-const embedEmpty = document.querySelector("#embed-empty");
-const embedLoading = document.querySelector("#embed-loading");
-const embedNotice = document.querySelector("#embed-notice");
 const participantCards = document.querySelector("#participant-cards");
 const chatMembers = document.querySelector("#chat-members");
 const chatMessages = document.querySelector("#chat-messages");
@@ -34,8 +12,6 @@ const roomUser = document.querySelector("#room-user");
 const serverStatus = document.querySelector("#server-status");
 const logoutButton = document.querySelector("#room-logout");
 
-let frameLoadTimer;
-let selectedPlatformKey = null;
 let roomSocket = null;
 let reconnectTimer = null;
 let stableConnectionTimer = null;
@@ -43,11 +19,6 @@ let reconnectAttempts = 0;
 let stopReconnect = false;
 const presenceElements = new Map();
 const renderedEventIds = new Set();
-
-function showEmbedNotice(message, isError = false) {
-  embedNotice.textContent = message;
-  embedNotice.classList.toggle("embed-error", isError);
-}
 
 function setServerStatus(message, state = "connected") {
   serverStatus.classList.toggle("connection-error", state === "error");
@@ -73,68 +44,6 @@ function setChatEnabled(enabled) {
   chatSendButton.disabled = !enabled;
   chatPhasePill.textContent = enabled ? "Live" : "Connecting";
 }
-
-function selectPlatform(platformKey) {
-  const platform = platforms[platformKey];
-  if (!platform) {
-    return;
-  }
-
-  selectedPlatformKey = platformKey;
-  window.clearTimeout(frameLoadTimer);
-  for (const button of platformButtons) {
-    button.setAttribute(
-      "aria-pressed",
-      String(button.dataset.platform === platformKey),
-    );
-  }
-
-  selectedPlatformName.textContent = platform.label;
-  openPlatform.href = platform.url;
-  openPlatform.hidden = false;
-  embedEmpty.hidden = true;
-  embedLoading.hidden = false;
-  platformFrame.hidden = false;
-  showEmbedNotice(
-    "Loading the site in an embedded view. If it stays blank or shows a browser error, the site may disallow framing; use “Open in new tab”.",
-  );
-  platformFrame.src = platform.url;
-
-  frameLoadTimer = window.setTimeout(() => {
-    embedLoading.hidden = true;
-    showEmbedNotice(
-      "The embedded view is taking longer than expected. This site may block framing; try opening it in a new tab.",
-      true,
-    );
-  }, 12000);
-}
-
-for (const button of platformButtons) {
-  button.addEventListener("click", () => selectPlatform(button.dataset.platform));
-}
-
-platformFrame.addEventListener("load", () => {
-  if (!selectedPlatformKey) {
-    return;
-  }
-  window.clearTimeout(frameLoadTimer);
-  embedLoading.hidden = true;
-  showEmbedNotice(
-    "The browser finished loading the frame, but cross-origin security prevents this app from verifying the page contents. If it appears blank or blocked, open it in a new tab.",
-  );
-});
-
-platformFrame.addEventListener("error", () => {
-  if (!selectedPlatformKey) {
-    return;
-  }
-  window.clearTimeout(frameLoadTimer);
-  embedLoading.hidden = true;
-  showEmbedNotice(
-    "The browser could not load this embedded page. Open the coding platform in a new tab instead.",
-    true,
-  );
-});
 
 function setPresence(username, online) {
   const elements = presenceElements.get(username);
@@ -202,7 +111,7 @@ function renderParticipants(users) {
     const placeholder = document.createElement("div");
     placeholder.className = "screen-placeholder";
     placeholder.dataset.screenPlaceholder = username;
-    placeholder.textContent = "Not sharing a coding tab";
+    placeholder.textContent = "Not sharing a browser tab";
     screen.append(video, placeholder);
 
     const fullscreen = document.createElement("button");
