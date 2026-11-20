@@ -35,10 +35,13 @@ def test_authenticated_user_can_open_room() -> None:
         room = client.get("/room")
         assert room.status_code == 200
         assert "CODING-ROOM-001" in room.text
-        assert "HackerRank" in room.text
-        assert "GeeksforGeeks" in room.text
-        assert "LeetCode" in room.text
-        assert "platform-frame" in room.text
+        assert "Shared screens" in room.text
+        assert "Share Browser Tab" in room.text
+        assert "HackerRank" not in room.text
+        assert "GeeksforGeeks" not in room.text
+        assert "LeetCode" not in room.text
+        assert "platform-frame" not in room.text
+        assert "<iframe" not in room.text
         assert "Connect to the room chat" in room.text
 
 
